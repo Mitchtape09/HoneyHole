@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One spot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+
+
+
+</head>
+<body class="bg-info">
+    <div class="nav">
+        <div class="title_class">
+            <h1 class="honey"><span class="honey1">Honey</span><span>Ho</span><span class="l">..</span><span >e</span></h1>
+            <img class="fishing_pole" src="{{ url_for('static', filename='imgs/fishing_pole_shaddow.png') }}" alt="">
+        </div>
+        <div>
+            <div class="social_media">
+                <img src="{{ url_for('static', filename='imgs/facebook.png') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/instagram.jpg') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/twitter.png') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/youtube.png') }}" alt="facebook img" width="50px" height="40px">
+            </div>
+            <div class="d-flex justify-content-between" >
+                <a href="/dashboard" class="fw-semibold fs-4 text-black">Dashboard </a><p class="fw-semibold fs-4"> | </p>
+                <a href="/users/logout" class="fw-semibold fs-4 text-black">Logout</a>
+            </div>
+        </div>
+    </div>            
+    
+    <div class="text-center">
+        <h3 class="mini_nav">{{one_spot.name}}</h3>
+    </div>
+    
+    
+    <div class="container">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Type</th>
+                    <th>Proof</th>
+                    <th>Length</th>
+                    <th>Weight</th>
+                    <th>Nickname</th>
+                    <th>Bait</th>
+                    <th>Date</th>
+                    <th>Moon Phase</th>
+                    <th>Tide</th>
+                    <th>Weather</th>
+                    <th>Trophy</th>
+                    <th>Remove Catch</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for one_fish in one_spot.fish %}
+                <tr>
+                    <td>{{one_fish.type}}</td>
+                    <td><img src="{{ url_for('static', filename='imgs/fish_pic_2.jpg') }}" alt="Fish Pic" width="200px"></td>
+                    <td>{{one_fish.length}}</td>
+                    <td>{{one_fish.weight}}</td>
+                    <td>{{one_fish.nickname}}</td>
+                    <td>{{one_fish.bait}}</td>
+                    <td>{{one_fish.date}}</td>
+                    <td>{{one_fish.moon_phase}}</td>
+                    <td>{{one_fish.tide}}</td>
+                    <td>{{one_fish.weather}}</td>
+                    <td>{{one_fish.trophy}}</td>
+                    <td><a href="/fishes/{{one_fish.id}}/delete">Delete</a></td>
+                </tr>
+                {% endfor %}
+
+            
+
+            </tbody>
+        </table>
+</div>    
+</body>
+</html>

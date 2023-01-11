@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="nav">
+        <div class="title_class">
+            <h1 class="honey"><span class="honey1">Honey</span><span>Ho</span><span class="l">..</span><span >e</span></h1>
+            <img class="fishing_pole" src="{{ url_for('static', filename='imgs/fishing_pole_shaddow.png') }}" alt="">
+        </div>
+        <div>
+            <div class="social_media">
+                <img src="{{ url_for('static', filename='imgs/facebook.png') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/instagram.jpg') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/twitter.png') }}" alt="facebook img" width="50px" height="40px">
+                <img src="{{ url_for('static', filename='imgs/youtube.png') }}" alt="facebook img" width="50px" height="40px">
+            </div>
+            <div class="d-flex justify-content-between" >
+                <a href="/spots/new" class="fw-semibold fs-4 text-black">Add a Spot </a><p class="fw-semibold fs-4"> | </p>
+                <a href="/trophies" class="fw-semibold fs-4 text-black">My Trophies</a><p class="fw-semibold fs-4"> | </p>
+                <a href="/users/logout" class="fw-semibold fs-4 text-black">Logout</a>
+            </div>
+        </div>
+    </div>
+    {% for message in get_flashed_messages() %}
+    <p class="text-danger">{{message}}</p>
+    {% endfor %}
+    <div class="text-center">
+        <h3 class="mini_nav">{{logged_user.first_name}}'s Spots</h3>
+    </div>
+    <div class="container">
+
+
+<div>
+
+    <style>
+        #map {
+            align-items: center;
+            height: 500px;
+            width: 600px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        #searchInput {
+            height: 30px;
+            width: 200px;
+        }
+
+        .card {
+            border-radius: 30px;
+            background-color: rgb(0, 0, 0);
+            align-items: center;
+            width: 400px;
+            height: 230px;
+            padding: 15px;
+            margin-top: 20px;
+            opacity: .7;
+            color: aliceblue;
+        }
+
+        .weather_btn {
+            border-radius: 50%;
+            height: 2.2em;
+            width: 2.2em;
+        }
+
+        .weather_search {
+            border-radius: 13px;
+            text-align: center;
+        }
+
+        .icon {
+            width: 35px;
+        }
+
+
+    </style>
+    <body>
+
+        
+        <div class="d-flex justify-content-between">
+            <input id="searchInput" class="controls text-center" type="text" placeholder="Enter a location">
+            
+            <div id="map"></div>
+            
+            <div class="card">
+                <div class="search">
+                    <input type="text" class="weather_search" placeholder="local weather...">
+                    <button class="weather_btn"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path></svg></button>
+                </div>
+                <div class="weather">
+                    <h3 class="city">Weather in Denver</h3>
+                    <div class="temp">51°</div>
+                    <img src="" alt="" class="icon">
+                    <div class="description">Cloudy</div>
+                    <div class="humidity">Humidity: 60%</div>
+                    <div class="wind">Wind Speed: 6.2 mph</div>
+    
+                </div>
+            </div>
+        </div>
+    
+    
+       
+    
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCPnDMdl7oCRaguBsr20eV-3_AfTIWbMjg&callback=initMap" async defer></script>
+    
+        <script>
+            function initMap(){
+                var map = new google.maps.Map(document.getElementById("map"), {
+                    center: {lat: -33.8688, lng: 151.2195},
+                    zoom: 13
+                });
+                var input = document.getElementById('searchInput');
+                map.controls[google.maps.ControlPosition.TOP].push(input);
+    
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.bindTo('bounds', map);
+                
+                var infowindow = new google.maps.InfoWindow();
+                var marker = new google.maps.Marker({
+                    map: map,
+                    anchorPoint: new google.maps.Point(0,-29)
+                });
+    
+                autocomplete.addListener('place_changed', function() {
+                    infowindow.close();
+                    marker.setVisible(false);
+                    var place = autocomplete.getPlace();
+                    if(!place.geometry) {
+                        window.alert("Autocomplete's returned place contains no geometry");
+                        return;
+                    }
+    
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    }else{
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+                    }
+                    marker.setIcon(({
+                        url: place.icon,
+                        size: new google.maps.Size(71,71),
+                        origin: new google.maps.Point(0,0),
+                        anchor: new google.maps.Point(17,34),
+                        scaledSize: new google.maps.Size(35,35),
+                    }));
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+    
+                    var address = '';
+                    if(place.address_components) {
+                        address = [
+                            (places.address_components[0] && place.address_components[0].short_name || ''),
+                            (places.address_components[1] && place.address_components[1].short_name || ''),
+                            (places.address_components[2] && place.address_components[2].short_name || ''),
+                        ].join(' ');
+                    }
+    
+                    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+                    infowindow.open(map, marker);
+    
+                    for(var i = 0; i < place.address_components.length; i++) {
+                        if(place.address_components[i].types[0] == 'postal_code') {
+                            documents.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+                        }
+                        if(place.address_components[i].types[0] == 'country') {
+                            document.getElementById('country').innerHTML = place.address_components[i].long_name;
+                        }
+                    }    
+                    document.getElementById('location').innerHTML = place.address_components[i].long_name;
+                    document.getElementById('lat').innerHTML = place.geometry.location.lat();
+                    document.getElementById('lon').innerHTML = place.geometry.location.lng();
+    
+    
+                })
+            }
+        </script>
+        <script defer>
+            let weather = 
+            {
+                apiKey: "d1a51fc4363caa3e6778e5c487d9abfb",
+                fetchWeather: function (city, state) {
+                    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + state + "&units=imperial&appid="+ this.apiKey)
+                    .then((response) => response.json())
+                    .then((data) => this.displayWeather(data));
+                },
+                displayWeather: function(data) {
+                    const {name} = data;
+                    const {icon, description} = data.weather[0];
+                    const {temp, humidity} = data.main;
+                    const {speed} = data.wind;
+                    console.log(name,icon,description,temp,humidity,speed);
+                    document.querySelector(".city").innerText = "Weather in " + name;
+                    document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    document.querySelector(".description").innerText = description;
+                    document.querySelector(".temp").innerText = temp + "F°";
+                    document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
+                    document.querySelector(".wind").innerText = "Wind speed: " + speed + " mph";
+                },
+                search: function () {
+                    this.fetchWeather(document.querySelector(".weather_search").value);
+                },
+            };
+            
+            document.querySelector(".search button").addEventListener("click", function() {
+                weather.search();
+            });
+            </script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    
+</div>
+<div class="sorts">
+    <a href="spots/desc">Spots: Z-A</a>
+    <a href="spots/asc">Spots: A-Z</a>
+    <a href="/go/fishing">Go Fishing</a>
+</div>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                    <th>Add a Catch</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for one_spot in all_spots %}
+                <tr>
+                    <td>{{one_spot.name}}</td>
+                    <td>{{one_spot.location}}</td>
+                    <td>
+                        <a href="/spots/{{one_spot.id}}/view">View</a>|
+                        {% if one_spot.user_id == session['user_id'] %}
+                        <a href="/spots/{{one_spot.id}}/edit">Edit</a>|
+                        <a href="/spots/{{one_spot.id}}/delete">Delete</a>
+                        {%endif%}
+                    </td>
+                    <td>
+                        {% if one_spot.user_id == session['user_id'] %}
+                        <a href="/fish/{{one_spot.id}}/add_catch">New Catch</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <!--Table that shows all user/spot information located in database (on record)-->
+    
+</body>
+</html>

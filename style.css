@@ -1,0 +1,58 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  background-color:rgba(251, 251, 251, 0.892);
+  color: rgb(0, 0, 0);
+  padding-top: 10px;
+  height: 130px;
+}
+
+.mini_nav {
+  background-color:rgba(1, 29, 50, 0.752);
+  color: rgb(230, 225, 225);
+}
+
+.sorts {
+  text-align: center;
+}
+
+.title_class {
+  position: relative;
+}
+
+.honey {
+  color: rgb(0, 0, 0);
+  position: absolute;
+  padding-top: 37px;
+}
+
+.honey1 {
+  color: rgb(187, 167, 15);
+}
+
+.hole {
+  color: black;
+}
+
+.l {
+  color: rgb(0, 0, 0);
+}
+
+.social_media {
+  text-align: right;
+}
+
+.fishing_pole {
+  padding-left: 52px;
+  transform: rotate(-25deg);
+}
+
+body {
+  background-image: url(https://wallpapers.com/images/featured/fishing-c0nhe44lqado0ird.webp);
+}
+
+
+
+
+
+

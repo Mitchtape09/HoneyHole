@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Catch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+
+
+
+</head>
+<body class="bg-info">
+    <div class="nav">
+        <div class="title_class">
+            <h1 class="honey"><span class="honey1">Honey</span><span>Ho</span><span class="l">..</span><span >e</span></h1>
+            <img class="fishing_pole" src="{{ url_for('static', filename='imgs/fishing_pole_shaddow.png') }}" alt="">
+        </div>
+            <div>
+                <div class="social_media">
+                    <img src="{{ url_for('static', filename='imgs/facebook.png') }}" alt="facebook img" width="50px" height="40px">
+                    <img src="{{ url_for('static', filename='imgs/instagram.jpg') }}" alt="facebook img" width="50px" height="40px">
+                    <img src="{{ url_for('static', filename='imgs/twitter.png') }}" alt="facebook img" width="50px" height="40px">
+                    <img src="{{ url_for('static', filename='imgs/youtube.png') }}" alt="facebook img" width="50px" height="40px">
+                </div>
+                <div class="d-flex justify-content-between" >
+                    <a href="/dashboard" class="fw-semibold fs-4 text-black">Dashboard </a><p class="fw-semibold fs-4"> | </p>
+                    <a href="/users/logout" class="fw-semibold fs-4 text-black">Logout</a>
+                </div>
+            </div>
+    </div>        
+    <div class="text-center">
+        <h3 class="mini_nav">Add Catch</h3>
+    </div>
+
+    <div class="container">
+        <form class="d-flex flex-column" action="/fish/{{spot_id}}/create", method="post">
+            <label  class="mt-2 mb-2 text-light" for="type">Type:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="type" id="type">
+            <label class="mb-2 text-light" for="length">Length:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="length" id="length">
+            <label class="mb-2 text-light" for="weight">Weight:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="weight" id="weight">
+            <label class="mb-2 text-light" for="nickname">Nickname:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="nickname" id="nickname">
+            <label class="mb-2 text-light" for="bait">Bait/Lure Used:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="bait" id="bait">
+            <label class="mb-2 text-light" for="date">Today's Date:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="date" name="date" id="date">
+            <label class="mb-2 text-light" for="moon_phase">Moonphase:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="moon_phase" id="moon_phase">
+            <label class="mb-2 text-light" for="tide">Tide (rising, falling, stationary):</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="tide" id="tide">
+            <label class="mb-2 text-light" for="weather">Today's Weather:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="weather" id="weather">
+            <label class="mb-2 text-light" for="trophy">Add as trophy fish:</label>
+            <input class="mb-2 text-light bg-secondary p-2" style="--bs-bg-opacity: .8;" type="text" name="trophy" id="trophy">
+
+            <button class="btn btn-primary mt-4">Log Catch</button>
+        </form>
+    </div>
+</body>
+</html>

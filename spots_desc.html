@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+</head>
+<body class="bg-info">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h1>HoneyHole</h1>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <a href="/spots/new" class="fw-semibold fs-4">Add a Spot </a><p class="fw-semibold fs-4"> | </p>
+                    <a href="/trophies" class="fw-semibold fs-4">My Trophies</a><p class="fw-semibold fs-4"> | </p>
+                    <a href="/users/logout" class="fw-semibold fs-4">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        {% for message in get_flashed_messages() %}
+        <p class="text-danger">{{message}}</p>
+        {% endfor %}
+        <div class="text-center">
+            <h3>{{logged_user.first_name}}'s Spots</h3>
+            <input class="text-center" id="search" type="text" placeholder="Search Spots..."><button>Submit</button>
+            <div>
+                <a href="spots/desc">Spots: A-Z</a>
+            </div>
+        </div>
+
+        
+        
+
+
+        <div id="map"></div>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <script async defer type="text/javascript"
+            src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCPnDMdl7oCRaguBsr20eV-3_AfTIWbMjg&callback=initMap'>
+        </script>
+        <script
+            src="{{ url_for('static', filename='script.js') }}">
+        </script>
+
+
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                    <th>Add a Catch</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for one_spot in all_spots %}
+                <tr class="table-light">
+                    <td>{{one_spot.name}}</td>
+                    <td>{{one_spot.location}}</td>
+                    <td>
+                        <a href="/spots/{{one_spot.id}}/view">View</a>|
+                        {% if one_spot.user_id == session['user_id'] %}
+                        <a href="/spots/{{one_spot.id}}/edit">Edit</a>|
+                        <a href="/spots/{{one_spot.id}}/delete">Delete</a>
+                        {%endif%}
+                    </td>
+                    <td>
+                        {% if one_spot.user_id == session['user_id'] %}
+                        <a href="/fish/{{one_spot.id}}/add_catch">New Catch</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <!--Table that shows all user/spot information located in database (on record)-->
+    
+</body>
+</html>
